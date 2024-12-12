@@ -60,15 +60,15 @@ public class MySpellChecker implements SpellChecker{
                                 }
                                 
 
-                                 break;
+                                break;
                                                     
                         }
-                     }
+                    }
                 lineNum++;
-             }
-         }
+            }
+        }
                             
-     }
+    }
     @Override
     public boolean spellCheck(MyWord word) {
         return dictionary.contains(word);
