@@ -8,22 +8,23 @@ import java.util.Scanner;
 
 public class MySpellChecker implements SpellChecker{
     protected MyWord[] words;
-    public static HashSet<MyWord> dictionary;
+    public static HashSet<MyWord> dictionaryOfCorrectWords;
+
 
     public MySpellChecker(File F1,File F2) throws FileNotFoundException{
         try(Scanner dictionScan = new Scanner(F1); Scanner fileScan = new Scanner(F2)){
             while(dictionScan.hasNext()){
-                dictionary.add(new MyWord(dictionScan.next()));
+                dictionaryOfCorrectWords.add(new MyWord(dictionScan.next()));
             }
             int lineNum = 1;
             while(fileScan.hasNextLine()){
                 String tempString = fileScan.nextLine();
-                MyWord tempMyWord;
+                MyWord currentWordInFile;
                 try(Scanner tempScanner = new Scanner(tempString)){
-                    tempMyWord = new MyWord(tempScanner.next());
+                    currentWordInFile = new MyWord(tempScanner.next());
                 }
-                if(!spellCheck(tempMyWord)){
-                    System.out.printf("line: %d /ncheck: %s", lineNum , tempMyWord.getString());
+                if(!spellCheck(currentWordInFile)){
+                    System.out.printf("line: %d /ncheck: %s", lineNum , currentWordInFile.getString());
 
                     
                     System.out.println("1 - Provide correction");
@@ -48,18 +49,17 @@ public class MySpellChecker implements SpellChecker{
                             case 2:
                                 break;
                             case 3:
-                                                    
+                                dictionaryOfCorrectWords.add(currentWordInFile);     
                                 break;
                             case 4:
-                                dictionary.add(tempMyWord);
+                                dictionaryOfCorrectWords.add(currentWordInFile);
                                 try( FileWriter dictionWriter = new FileWriter(F1);){
-
+                                
                                 }
                                 catch(IOException e){
                                     
                                 }
                                 
-
                                 break;
                                                     
                         }
@@ -69,9 +69,16 @@ public class MySpellChecker implements SpellChecker{
         }
                             
     }
+
+    public void addToDictionary(String s) {
+        if (dictionaryOfCorrectWords.contains(new MyWord(s))) {
+        } else {
+            dictionaryOfCorrectWords.add(new MyWord(s));
+        }
+    }
     @Override
     public boolean spellCheck(MyWord word) {
-        return dictionary.contains(word);
+        return dictionaryOfCorrectWords.contains(word);
     }
 
     

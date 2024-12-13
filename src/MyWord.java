@@ -5,6 +5,7 @@ public class MyWord implements Comparable<MyWord> {
     }
     @Override
     public int compareTo(MyWord o) {
+        // TODO: Implement ignore case sensitivity
         int val = 0;
         int i = 0;
         char[] charArray1 = this.getWord();
@@ -22,9 +23,7 @@ public class MyWord implements Comparable<MyWord> {
         return word;
     }
     public boolean equals(MyWord word) {
-        boolean returnBoo;
-        returnBoo = (this.compareTo(word) == 0) ? true : false;
-        return returnBoo; 
+        return this.compareTo(word) == 0 ? true : false;
     }
     @Override
     public int hashCode() {
